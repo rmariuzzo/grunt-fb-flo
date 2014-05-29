@@ -1,8 +1,8 @@
 {
-  "name": "grunt-flo",
+  "name": "grunt-fb-flo",
   "description": "Starts a fb-flo server.",
   "version": "0.1.0",
-  "homepage": "https://github.com/rmariuzzo/grunt-flo",
+  "homepage": "https://github.com/rmariuzzo/grunt-fb-flo",
   "author": {
     "name": "Rubens Mariuzzo",
     "email": "rubens@mariuzzo.com",
@@ -10,17 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/rmariuzzo/grunt-flo.git"
+    "url": "git://github.com/rmariuzzo/grunt-fb-flo.git"
   },
   "bugs": {
-    "url": "https://github.com/rmariuzzo/grunt-flo/issues"
+    "url": "https://github.com/rmariuzzo/grunt-fb-flo/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/rmariuzzo/grunt-flo/blob/master/LICENSE-MIT"
-    }
-  ],
+  "licenses": [{
+    "type": "MIT",
+    "url": "https://github.com/rmariuzzo/grunt-fb-flo/blob/master/LICENSE-MIT"
+  }],
   "engines": {
     "node": ">= 0.8.0"
   },
@@ -38,5 +36,8 @@
   },
   "keywords": [
     "gruntplugin"
-  ]
+  ],
+  "dependencies": {
+    "fb-flo": "~0.2.0"
+  }
 }
