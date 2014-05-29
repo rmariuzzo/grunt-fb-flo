@@ -20,7 +20,7 @@ module.exports = function(grunt) {
             dir: null,
             port: 8888,
             host: 'localhost',
-            verbose: true,
+            verbose: false,
             glob: [],
             useFilePolling: false,
             pollingInterval: null,

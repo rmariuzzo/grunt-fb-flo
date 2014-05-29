@@ -17,73 +17,70 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-fb-flo');
 ```
 
-## The "flo" task
+## Grunt Flo task
 
-### Overview
-In your project's Gruntfile, add a section named `flo` to the data object passed into `grunt.initConfig()`.
+_Run this task with the `grunt fb-flo` command._
+
+### Usage
+
+#### Basic example
 
 ```js
-grunt.initConfig({
-  flo: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
-});
+flo: {
+    serve: {
+        options: {
+            dir: 'assets/',
+            resolver: function (filepath, callback) {
+                exec('make', function(err) {
+                    if (err) throw err;
+                    callback({
+                        resourceURL: 'dist' + path.extname(filepath),
+                        contents: fs.readFileSync('src' + path.extname(filepath)).toString()
+                    })
+                });
+            }
+        }
+    }
+},
 ```
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### port
+Type: `number`
+Default value: `8888`
 
-A string value that is used to do something with whatever.
+The port to start the fb-flo server.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### host
+Type: `string`
+Default value: `localhost`
 
-A string value that is used to do something else with whatever else.
+The host to listen on.
 
-### Usage Examples
+#### verbose
+Type: `boolean`
+Default value: `false`
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+Indicates if flo should be noisy.
 
-```js
-grunt.initConfig({
-  flo: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
+#### glob
+Type: `array`
+Default value: `[]`
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+A glob string or array of globs to match against the files to watch.
 
-```js
-grunt.initConfig({
-  flo: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
+#### useFilePolling
+Type: `boolean`
+Default value: `false`
+
+Indicates if the file watcher should work in polling mode.
+
+#### pollingInterval
+Type: `number`
+Default value: `localhost`
+
+Interval at which to poll for file changes (if `useFilePolling` is set to true).
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-## Release History
-_(Nothing yet)_
