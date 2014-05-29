@@ -1,7 +1,7 @@
 {
     "name": "grunt-fb-flo",
     "description": "Starts a fb-flo server.",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "homepage": "https://github.com/rmariuzzo/grunt-fb-flo",
     "author": {
         "name": "Rubens Mariuzzo",
