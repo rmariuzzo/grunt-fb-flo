@@ -30,16 +30,6 @@ module.exports = function(grunt) {
                     dir: '.'
                 }
             }
-        },
-
-        jasmine: {
-            all: {
-                src: 'tasks/**/*.js',
-                options: {
-                    specs: 'specs/*_spec.js',
-                    template: require('grunt-template-jasmine-requirejs')
-                }
-            }
         }
 
     });
