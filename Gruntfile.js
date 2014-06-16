@@ -39,6 +39,12 @@ module.exports = function(grunt) {
             jasmine_node_watch: {
                 command: './node_modules/jasmine-node/bin/jasmine-node --color --autotest tests/'
             }
+        },
+
+        githooks: {
+            all: {
+                'pre-commit': 'jshint shell:jasmine_node'
+            }
         }
 
     });
@@ -50,6 +56,7 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
     // Register tasks.
+    grunt.registerTask('setup', ['githooks']);
     grunt.registerTask('test', ['shell:jasmine_node']);
     grunt.registerTask('test:watch', ['shell:jasmine_node_watch']);
     grunt.registerTask('default', ['test:watch']);
