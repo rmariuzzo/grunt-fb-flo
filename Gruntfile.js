@@ -24,18 +24,30 @@ module.exports = function(grunt) {
             }
         },
 
-        // Configuration to be run (and then tested).
         flo: {
             minimal_options: {
                 options: {
                     dir: '.'
                 }
             }
+        },
+
+        jasmine: {
+            all: {
+                src: 'tasks/**/*.js',
+                options: {
+                    specs: 'specs/*_spec.js',
+                    template: require('grunt-template-jasmine-requirejs')
+                }
+            }
         }
 
     });
 
+    // Load this tasks.
     grunt.loadTasks('tasks');
+
+    // Load task dependencies.
     require('load-grunt-tasks')(grunt);
 
     grunt.registerTask('default', ['jshint', 'flo']);
