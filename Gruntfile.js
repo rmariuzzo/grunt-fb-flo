@@ -16,8 +16,8 @@ module.exports = function(grunt) {
         jshint: {
             all: [
                 'Gruntfile.js',
-                'tasks/*.js',
-                '<%= nodeunit.tests %>'
+                'tasks/**/*.js',
+                'tests/**/*.js'
             ],
             options: {
                 jshintrc: '.jshintrc'
@@ -30,6 +30,15 @@ module.exports = function(grunt) {
                     dir: '.'
                 }
             }
+        },
+
+        shell: {
+            jasmine_node: {
+                command: './node_modules/jasmine-node/bin/jasmine-node --color tests/'
+            },
+            jasmine_node_watch: {
+                command: './node_modules/jasmine-node/bin/jasmine-node --color --autotest tests/'
+            }
         }
 
     });
@@ -40,6 +49,9 @@ module.exports = function(grunt) {
     // Load task dependencies.
     require('load-grunt-tasks')(grunt);
 
-    grunt.registerTask('default', ['jshint', 'flo']);
+    // Register tasks.
+    grunt.registerTask('test', ['shell:jasmine_node']);
+    grunt.registerTask('test:watch', ['shell:jasmine_node_watch']);
+    grunt.registerTask('default', ['test:watch']);
 
 };

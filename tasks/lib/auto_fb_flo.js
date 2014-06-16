@@ -36,7 +36,7 @@ module.exports = function(grunt) {
         delete options.resolver;
 
         this.options = options;
-    };
+    }
 
     // Methods //
 
@@ -45,10 +45,10 @@ module.exports = function(grunt) {
         // Start fb-flo server.
         var server = flo(this.dir, this.options, this.resolver);
 
-        server.once('ready', (function() {
+        server.once('ready', function() {
             var target = 'http://' + this.options.host + ':' + this.options.port;
             grunt.log.writeln('Started fb-flo server on ' + target);
-        }).bind(this));
+        }.bind(this));
     };
 
     /**
