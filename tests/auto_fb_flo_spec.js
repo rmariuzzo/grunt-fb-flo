@@ -45,6 +45,9 @@ describe('The AutoFlo object', function() {
     it('should create a full resolver from resolvers', function() {
         var done = false;
         var auto = new AutoFlo({
+            port: 8888,
+            dir: './',
+            glob: [],
             resolvers: [{
                 files: [
                     'assets/js/**/*.js',

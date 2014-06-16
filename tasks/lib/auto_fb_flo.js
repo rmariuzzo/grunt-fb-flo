@@ -24,7 +24,7 @@ module.exports = function(grunt) {
     function AutoFlo(options) {
         // Are we using resolvers?
         if (options.resolvers) {
-            options.glob = this.makeGlob(options.resolvers);
+            options.glob = options.glob.concat(this.makeGlob(options.resolvers));
             options.resolver = this.makeResolver(options.resolvers);
         }
 
@@ -100,24 +100,31 @@ module.exports = function(grunt) {
 
                     // Did something went wrong?
                     if (error) {
-                        grunt.log.error(error);
-                        grunt.log.error(result);
+                        grunt.log.error(result.stderr);
                         return;
                     }
 
                     grunt.log.writeln(result);
 
-                    // Here we finished.
+                    // Parse the provided callback.
+                    var cb;
                     if (typeof(resolver.callback) === 'function') {
-                        callback(resolver.callback(filepath, resolver));
+                        cb = resolver.callback(filepath, resolver);
                     } else {
-                        callback({
+                        cb = {
                             resourceURL: resolver.callback.resourceURL,
-                            contents: fs.readFileSync(resolver.callback.contentsPath),
+                            contents: resolver.callback.contents,
+                            contentsPath: resolver.contentsPath,
                             reload: resolver.callback.reload,
                             match: resolver.callback.match
-                        });
+                        };
                     }
+
+                    // Here we finish.
+                    if (cb.contentsPath) {
+                        cb.contents = fs.readFileSync(cb.contentsPath);
+                    }
+                    callback(cb);
                 });
             });
         };
