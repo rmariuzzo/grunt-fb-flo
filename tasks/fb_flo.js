@@ -12,8 +12,7 @@ module.exports = function(grunt) {
 
     // Dependencies //
 
-    var flo = require('fb-flo');
-    var auto = require('./lib/auto_fb_flo.js');
+    var Auto = require('./lib/auto_fb_flo.js')(grunt);
 
     // Task definition //
 
@@ -36,28 +35,10 @@ module.exports = function(grunt) {
             forever: true
         });
 
-        // Are we using resolvers?
-        if (this.data.resolvers) {
-            options.glob = auto.makeGlob(this.data.resolvers);
-            options.resolver = auto.makeResolver(this.data.resolvers);
-        }
+        var auto = new Auto(options);
+        auto.start();
 
-        // Clean up options.
-        var dir = options.dir;
-        var resolver = options.resolver;
-
-        delete options.dir;
-        delete options.resolver;
-
-        // Start fb-flo server
-        var server = flo(dir, options, resolver);
-
-        server.once('ready', function() {
-            var target = 'http://' + options.host + ':' + options.port;
-            grunt.log.writeln('Started fb-flo server on ' + target);
-        });
-
-        if (forever) {
+        if (options.forever) {
             this.async();
         }
     });

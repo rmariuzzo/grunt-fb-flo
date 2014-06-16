@@ -12,14 +12,44 @@ module.exports = function(grunt) {
 
     // Dependencies //
 
-    var minimatch = require('minimatch');
     var fs = require('fs');
+    var flo = require('fb-flo');
+    var minimatch = require('minimatch');
 
     // Class definition //
 
-    var AutoFbFlo = function() {};
+    /**
+     * @constructor
+     */
+    function AutoFlo(options) {
+        // Are we using resolvers?
+        if (options.resolvers) {
+            options.glob = this.makeGlob(options.resolvers);
+            options.resolver = this.makeResolver(options.resolvers);
+        }
+
+        // Clean up options.
+        this.dir = options.dir;
+        this.resolver = options.resolver;
+
+        delete options.dir;
+        delete options.resolver;
+
+        this.options = options;
+    };
 
     // Methods //
+
+    AutoFlo.prototype.start = function() {
+
+        // Start fb-flo server.
+        var server = flo(this.dir, this.options, this.resolver);
+
+        server.once('ready', (function() {
+            var target = 'http://' + this.options.host + ':' + this.options.port;
+            grunt.log.writeln('Started fb-flo server on ' + target);
+        }).bind(this));
+    };
 
     /**
      * Make an array of glob patterns from resolvers.
@@ -28,7 +58,7 @@ module.exports = function(grunt) {
      *
      * @return {Array} An array of glob patterns.
      */
-    AutoFbFlo.prototype.makeGlob = function(resolvers) {
+    AutoFlo.prototype.makeGlob = function(resolvers) {
         return resolvers.reduce(function(previous, current) {
             if (Array.isArray(current.files)) {
                 current.files.forEach(function(file) {
@@ -48,7 +78,7 @@ module.exports = function(grunt) {
      *
      * @return {Function} A resolver function.
      */
-    AutoFbFlo.prototype.makeResolver = function(resolvers) {
+    AutoFlo.prototype.makeResolver = function(resolvers) {
         return function(filepath, callback) {
             resolvers.forEach(function(resolver) {
 
@@ -91,5 +121,7 @@ module.exports = function(grunt) {
             });
         };
     };
+
+    return AutoFlo;
 
 };
