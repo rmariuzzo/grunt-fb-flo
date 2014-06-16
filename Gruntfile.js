@@ -34,10 +34,10 @@ module.exports = function(grunt) {
 
         shell: {
             jasmine_node: {
-                command: './node_modules/jasmine-node/bin/jasmine-node --color tests/'
+                command: './node_modules/jasmine-node/bin/jasmine-node --verbose --color tests/'
             },
             jasmine_node_watch: {
-                command: './node_modules/jasmine-node/bin/jasmine-node --color --autotest tests/'
+                command: './node_modules/jasmine-node/bin/jasmine-node --verbose --color --autotest tests/'
             }
         },
 
