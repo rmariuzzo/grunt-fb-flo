@@ -18,6 +18,8 @@
     "beforeEach" : false,
     "afterEach"  : false,
     "expect"     : false,
-    "spyOn"      : false
+    "spyOn"      : false,
+    "waitsFor"   : false,
+    "runs"       : false
   }
 }
