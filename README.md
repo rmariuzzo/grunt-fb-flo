@@ -23,25 +23,73 @@ _Run this task with the `grunt fb-flo` command._
 
 ### Usage
 
-#### Basic example
+#### Example with auto resolvers
+
+Instead of writing full function resolver inside your Gruntfile you can use _auto resolvers_. This will help you dramatically reduce the amount of code to write.
 
 ```js
-flo: {
-    serve: {
-        options: {
-            dir: 'assets/',
-            resolver: function (filepath, callback) {
-                exec('make', function(err) {
-                    if (err) throw err;
-                    callback({
-                        resourceURL: 'dist' + path.extname(filepath),
-                        contents: fs.readFileSync('src' + path.extname(filepath)).toString()
-                    })
-                });
+grunt.initConfig({
+    flo: {
+        serve: {
+            options: {
+                
+                // fb-flo options.
+                dir: './',
+                glob: [
+                    '!**/.subl*.tmp'
+                ],
+
+                // auto resolvers.
+                resolvers: [{
+                    files: ['assets/**/*.js'],
+                    tasks: ['jshint']
+                }, {
+                    files: ['assets/**/*.scss'],
+                    tasks: ['sass:dev'],
+                    callback: {
+                        resourceURL: 'assets/css/main.css',
+                        contentsPath: 'assets/css/main.css'
+                    }
+                }, {
+                    files: ['views/**/*.html', 'views/**/*.hbs'],
+                    tasks: ['targethtml:dev'],
+                    callback: {
+                        reload: true
+                    }
+                }]
             }
         }
     }
-},
+}
+```
+
+**Notes about auto resolvers**
+
+ - The `files` property is an array of [minimatch patterns](https://github.com/isaacs/minimatch).
+ - The `tasks` property is an array of grunt tasks to run when a watched files changes.
+ - The `callback` property is optional. If not provided, then the path of the changed file will be used as the resourceURL and its contents as the contents to be passed to fb-flo client. The `callback` have an custom property called `contentsPath` where you can set the path of the file to read its content (all other properties are the same as the original callback object defined by fb-flo). Also, the `callback` property can be a function that return a callback object (the function will received the filepath).
+
+#### Example with full resolver
+
+```js
+grunt.initConfig({
+    flo: {
+        serve: {
+            options: {
+                dir: 'assets/',
+                resolver: function (filepath, callback) {
+                    exec('make', function(err) {
+                        if (err) throw err;
+                        callback({
+                            resourceURL: 'dist' + path.extname(filepath),
+                            contents: fs.readFileSync('src' + path.extname(filepath)).toString()
+                        })
+                    });
+                }
+            }
+        }
+    }
+}
 ```
 
 ### Options
