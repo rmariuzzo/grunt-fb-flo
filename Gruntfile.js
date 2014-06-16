@@ -61,4 +61,6 @@ module.exports = function(grunt) {
     grunt.registerTask('test:watch', ['shell:jasmine_node_watch']);
     grunt.registerTask('default', ['test:watch']);
 
+    require('./tests/data/dummy_grunt_tasks.js')(grunt);
+
 };

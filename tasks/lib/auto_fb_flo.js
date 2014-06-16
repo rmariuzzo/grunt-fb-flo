@@ -94,12 +94,13 @@ module.exports = function(grunt) {
                 grunt.log.writeln('File: ' + filepath + ' changed!');
 
                 grunt.util.spawn({
-                    grunt: true,
-                    args: [resolver.tasks.join(' ')]
+                    cmd: 'grunt',
+                    args: resolver.tasks
                 }, function(error, result) {
 
                     // Did something went wrong?
                     if (error) {
+                        grunt.log.error(error);
                         grunt.log.error(result);
                         return;
                     }
