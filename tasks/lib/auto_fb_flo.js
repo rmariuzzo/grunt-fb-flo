@@ -111,10 +111,13 @@ module.exports = function(grunt) {
                     if (typeof(resolver.callback) === 'function') {
                         cb = resolver.callback(filepath, resolver);
                     } else {
+                        if (!resolver.callback) {
+                            resolver.callback = {};
+                        }
                         cb = {
-                            resourceURL: resolver.callback.resourceURL,
+                            resourceURL: resolver.callback.resourceURL || filepath,
+                            contentsPath: resolver.callback.contentsPath || filepath,
                             contents: resolver.callback.contents,
-                            contentsPath: resolver.contentsPath,
                             reload: resolver.callback.reload,
                             match: resolver.callback.match
                         };
