@@ -100,7 +100,7 @@ module.exports = function(grunt) {
 
                     // Did something went wrong?
                     if (error) {
-                        grunt.log.error(result.stderr);
+                        grunt.log.error(result.stdout);
                         return;
                     }
 
