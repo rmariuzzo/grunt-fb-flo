@@ -28,7 +28,8 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "fb-flo": "~0.2.0"
+    "fb-flo": "~0.2.0",
+    "minimatch": "^0.3.0"
   },
   "devDependencies": {
     "grunt": "~0.4.0",
@@ -36,8 +37,7 @@
     "grunt-githooks": "^0.3.1",
     "grunt-shell": "^0.7.0",
     "jasmine-node": "^1.14.3",
-    "load-grunt-tasks": "^0.5.0",
-    "minimatch": "^0.3.0"
+    "load-grunt-tasks": "^0.5.0"
   },
   "keywords": [
     "gruntplugin",
